@@ -41,7 +41,7 @@ commons-csv
 'java -jar dsv-converter-1.jar show-progress=true'
 
 'custom-delimiter'
-# Change delimiter. TAB, PIPE or COMMA
+# Change delimiter to TAB, PIPE or COMMA
 # If agrument not added, COMMA is default
 'java -jar dsv-converter-1.jar custom-delimiter=TAB'
 ```

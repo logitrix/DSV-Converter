@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.pst.ag.dsv_converter.dto.Arguments;
 import com.pst.ag.dsv_converter.utils.Constants;
 import com.pst.ag.dsv_converter.utils.DELIMITER;
+import com.pst.ag.dsv_converter.utils.Utils;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.io.IOUtils;
@@ -29,7 +30,7 @@ public class FileConverterService {
     public void execute(String[] args) {
         Map<String, String> commands = parseArgs(args);
         Arguments arguments = new Arguments(commands);
-        String date = getCurrentDate();
+        String date = Utils.getCurrentDate();
         if (arguments.isMoreThanOneInputFile()) {
             AtomicInteger index = new AtomicInteger();
             Arrays.asList(arguments.getInputFiles().split(","))
@@ -142,11 +143,4 @@ public class FileConverterService {
         }
     }
 
-
-    private String getCurrentDate() {
-        String pattern = "YYYY-MM-dd";
-        DateFormat df = new SimpleDateFormat(pattern);
-        Date today = Calendar.getInstance().getTime();
-        return df.format(today);
-    }
 }
