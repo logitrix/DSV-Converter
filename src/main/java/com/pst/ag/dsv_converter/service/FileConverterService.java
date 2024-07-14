@@ -88,30 +88,27 @@ public class FileConverterService {
                 if (csvLine != null) {
                     try {
 
-                        Map<String, String> jsonObject = null;
+                        Map<String, String> jsonObject = new HashMap();
                         jsonGenerator.writeStartObject();
                         // Convert each field to JSON key-value pair
-                        for (int i = 0; i < csvParser.getHeaderNames().size(); i++) {
-                            String header = csvParser.getHeaderNames().get(i);
+
+                        AtomicInteger li = new AtomicInteger();
+                        csvParser.getHeaderNames().stream().forEach(header -> {
                             try {
-                                String value = csvLine.get(i);
+                                String value = csvLine.get(li.getAndIncrement());
                                 if (value != null && !value.isEmpty()) {
                                     jsonGenerator.writeStringField(header, value.trim());
                                 }
 
                                 if (showProgress) {
-                                    if (jsonObject == null) {
-                                        jsonObject = new HashMap();
-                                    }
                                     if (value != null && !value.isEmpty()) {
                                         jsonObject.put(header, value.trim());
                                     }
                                 }
-
-                            } catch (ArrayIndexOutOfBoundsException a) {
-                                jsonGenerator.writeStringField(header, null);
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
                             }
-                        }
+                        });
 
                         if (showProgress) {
                             if (jsonObject != null) {

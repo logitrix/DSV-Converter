@@ -53,7 +53,6 @@ public class FileConverterServiceTest {
         String finalOutput = outputFilePath + "-" + Utils.getCurrentDate() + ".json";
         String[] args = {"inputs=" + inputFile,
                 "output-filename=" + outputFilePath,
-                "show-progress=true",
                 "custom-delimiter=TAB"};
         fileConverterService.execute(args);
         File outputJsonFile = new File(finalOutput);
